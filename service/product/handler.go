@@ -25,7 +25,7 @@ func (service *ProductService) CreateProduct() gin.HandlerFunc {
 		// Validate Unique Code
 		exists := service.store.FindOneProductByCode(product.Code)		
 		if exists.ID != "" {
-			message := "Kode produk sudah tersedia"
+			message := "kode produk sudah tersedia"
 			resp := util.NewAPIResponse(nil, message, http.StatusInternalServerError)
 			ctx.JSON(http.StatusBadRequest, resp)
 			ctx.Abort()
@@ -67,7 +67,42 @@ func (service *ProductService) RemoveProduct() gin.HandlerFunc {
 
 func (service *ProductService) UpdateProduct() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		ctx.JSON(http.StatusOK, "Product Updated")
+		
+		id := ctx.Param("id")		
+		var product model.Product
+
+		err := ctx.ShouldBindJSON(&product)
+		if err != nil {
+			errors := err.Error()
+			resp := util.NewAPIResponse(nil, errors, http.StatusBadRequest)
+			ctx.JSON(http.StatusBadRequest, resp)
+			ctx.Abort()
+			return
+		}
+
+		// Validate product exist
+		_, err = service.store.FindOneProduct(id)
+		if err != nil {
+			message := "produk tidak ditemukan"
+			resp := util.NewAPIResponse(nil, message, http.StatusBadRequest)
+			ctx.JSON(http.StatusBadRequest, resp)
+			ctx.Abort()
+			return
+		}
+
+		product.ID = id
+		err = service.store.UpdateProduct(product)
+		if err != nil {
+			message := "gagal mengupdate produk " + err.Error()
+			resp := util.NewAPIResponse(nil, message, http.StatusInternalServerError)			
+			ctx.JSON(http.StatusInternalServerError, resp)
+			ctx.Abort()
+			return
+		}
+
+		message := "berhasil mengupdate produk"
+		resp := util.NewAPIResponse(nil, message, http.StatusOK)
+		ctx.JSON(http.StatusOK, resp)
 	}	
 }
 
