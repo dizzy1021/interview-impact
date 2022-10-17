@@ -17,8 +17,8 @@ func NewProductStore(db *gorm.DB) *ProductStore {
 	}
 }
 
-func (store *ProductStore) InsertProduct(product model.Product) error {
-	result := store.db.Create(product)
+func (store *ProductStore) InsertProduct(product model.Product) error {	
+	result := store.db.Create(&product)
 
 	if result.Error != nil {
 		return result.Error
@@ -62,4 +62,11 @@ func (store *ProductStore) FindOneProduct(id string) (*model.Product, error) {
 		return nil, result.Error
 	}
 	return &product, nil	
+}
+
+func (store *ProductStore) FindOneProductByCode(code string) (*model.Product) {
+	var product *model.Product
+	_ = store.db.Where("code = ?", code).First(&product)	
+	
+	return product	
 }

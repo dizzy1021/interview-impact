@@ -23,8 +23,8 @@ func (service *ProductService) New(routerGroup *gin.RouterGroup) {
 		router = routerGroup
 	}	
 	router.POST("/product", service.CreateProduct())
-	router.PUT("/product", service.UpdateProduct())
-	router.DELETE("/product", service.RemoveProduct())
 	router.GET("/product", service.FindAllProduct())
 	router.GET("/product/:id", service.FindProduct())
+	router.PUT("/product/:id", service.UpdateProduct())
+	router.DELETE("/product/:id", service.RemoveProduct())
 }

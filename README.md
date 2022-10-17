@@ -3,7 +3,7 @@
 `` Objective ``
 
 - REST API Product
-  - [ ] POST Product
+  - [x] POST Product
   - [ ] PUT Product
   - [ ] DELETE Product
   - [ ] GET Product with filter and pagination
@@ -23,8 +23,8 @@
 - [x] Use Basic Auth to secure API
 - [x] Rate Limiter
 - [x] Postgresql Driver
-- [ ] Request Validation
-- [ ] Response JSON API
+- [x] Request Validation
+- [x] Response JSON API
 - [x] API Versioning
 - [ ] Unit Test
 - [ ] API Docs
