@@ -3,10 +3,10 @@
 `` Objective ``
 
 - REST API Product
-  - [] POST Product
-  - [] PUT Product
-  - [] DELETE Product
-  - [] GET Product with filter and pagination
+  - [ ] POST Product
+  - [ ] PUT Product
+  - [ ] DELETE Product
+  - [ ] GET Product with filter and pagination
 
 `` Structure ``
 
@@ -19,12 +19,12 @@
 
 `` TODO ``
 
-- [] Environtment Variable
-- [] Use Basic Auth to secure API
-- [] Rate Limiter
-- [] Mysql Adapter
-- [] Request Validation
-- [] Response JSON API
-- [] API Versioning
-- [] Unit Test
-- [] API Docs
+- [ ] Environtment Variable
+- [ ] Use Basic Auth to secure API
+- [ ] Rate Limiter
+- [ ] Mysql Adapter
+- [ ] Request Validation
+- [ ] Response JSON API
+- [ ] API Versioning
+- [ ] Unit Test
+- [ ] API Docs
