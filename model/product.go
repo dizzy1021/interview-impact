@@ -3,6 +3,7 @@ package model
 import (
 	"time"
 
+	"github.com/google/uuid"
 	"gorm.io/gorm"
 )
 
@@ -15,7 +16,7 @@ const (
 )
 
 type Product struct {
-	ID			string			`gorm:"primaryKey"`
+	ID			string			`gorm:"primaryKey;type:uuid"`
 	Code		string			`gorm:"size:50;index:idx_product_code,unique;not null"`
 	Name		string			`gorm:"size:125;not null"`
 	Description	string			`gorm:"type:text;not null"`
@@ -25,3 +26,8 @@ type Product struct {
 	UpdatedAt	time.Time		
 	DeletedAt	gorm.DeletedAt	`gorm:"index"`
 }
+
+func (m *Product) BeforeCreate(tx *gorm.DB) (err error) {
+	m.ID = uuid.NewString()
+	return
+  }

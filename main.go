@@ -9,6 +9,7 @@ import (
 
 	"dizzy1021.dev/interview-impact/driver"
 	"dizzy1021.dev/interview-impact/model"
+	"dizzy1021.dev/interview-impact/service/product"
 	"dizzy1021.dev/interview-impact/util"
 	"gorm.io/gorm"
 
@@ -53,6 +54,9 @@ func main() {
 		})
 	})
 
+	// Register Services
+	v1 := router.Group("/api/v1")
+	product.NewProductService(router, db).New(v1)
 
 	server.ListenAndServe()
 }

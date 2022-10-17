@@ -22,7 +22,7 @@
 - [x] Environtment Variable
 - [ ] Use Basic Auth to secure API
 - [ ] Rate Limiter
-- [ ] Mysql Adapter
+- [x] Postgresql Driver
 - [ ] Request Validation
 - [ ] Response JSON API
 - [ ] API Versioning
