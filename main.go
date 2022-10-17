@@ -19,6 +19,7 @@ import (
 
 func main() {
 	router  := gin.Default()
+	router.ForwardedByClientIP = true
 
 	port := util.LoadEnv("PORT")
 	readTimeout, err := strconv.Atoi(util.LoadEnv("READ_TIMEOUT"))
@@ -40,10 +41,10 @@ func main() {
 		Addr		: ":" + port,
 		Handler		: router,
 		ReadTimeout	: time.Duration(readTimeout) * time.Second,
-		WriteTimeout: time.Duration(writeTimeout) * time.Second,		
+		WriteTimeout: time.Duration(writeTimeout) * time.Second,			
 	}
 
-	gin.SetMode(appMode)
+	gin.SetMode(appMode)	
 
 	// DB migration
 	migrate(db)
@@ -56,7 +57,7 @@ func main() {
 	})
 
 	// Register Services
-	v1 := router.Group("/api/v1", middleware.BasicAuth())
+	v1 := router.Group("/api/v1", middleware.BasicAuth(), middleware.RateLimitter())
 	product.NewProductService(router, db).New(v1)
 
 	server.ListenAndServe()

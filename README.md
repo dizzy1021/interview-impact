@@ -21,7 +21,7 @@
 
 - [x] Environtment Variable
 - [x] Use Basic Auth to secure API
-- [ ] Rate Limiter
+- [x] Rate Limiter
 - [x] Postgresql Driver
 - [ ] Request Validation
 - [ ] Response JSON API
