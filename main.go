@@ -65,7 +65,7 @@ func main() {
 
 func migrate(db *gorm.DB) {
 	// Create enum uom
-	query := fmt.Sprintf(`DROP TYPE IF EXISTS uom CASCADE; CREATE TYPE uom AS ENUM ('%s', '%s', '%s')`, model.SHEET, model.ROLL, model.PCS)
+	query := fmt.Sprintf(`DROP TYPE IF EXISTS uom; CREATE TYPE uom AS ENUM ('%s', '%s', '%s')`, model.SHEET, model.ROLL, model.PCS)
 	db.Exec(query)
 	
 	// Auto Migrate
