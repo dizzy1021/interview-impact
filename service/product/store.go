@@ -36,7 +36,7 @@ func (store *ProductStore) UpdateProduct(product model.Product) error {
 }
 
 func (store *ProductStore) DeleteProduct(id string) error {
-	result := store.db.Delete(&model.Product{}, id)
+	result := store.db.Where("id = ?", id).Delete(&model.Product{})
 
 	if result.Error != nil {
 		return result.Error

@@ -49,7 +49,19 @@ func (service *ProductService) CreateProduct() gin.HandlerFunc {
 
 func (service *ProductService) RemoveProduct() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		ctx.JSON(http.StatusOK, "Product Removed")
+		id := ctx.Param("id")
+		err := service.store.DeleteProduct(id)
+		if err != nil {
+			message := "gagal menghapus produk " + err.Error()
+			resp := util.NewAPIResponse(nil, message, http.StatusInternalServerError)			
+			ctx.JSON(http.StatusInternalServerError, resp)
+			ctx.Abort()
+			return
+		}
+		
+		message := "berhasil menghapus produk"
+		resp := util.NewAPIResponse(nil, message, http.StatusOK)
+		ctx.JSON(http.StatusOK, resp)
 	}	
 }
 
