@@ -19,7 +19,7 @@
 
 `` TODO ``
 
-- [ ] Environtment Variable
+- [x] Environtment Variable
 - [ ] Use Basic Auth to secure API
 - [ ] Rate Limiter
 - [ ] Mysql Adapter

@@ -26,13 +26,20 @@ func main() {
 	}
 
 	appMode := loadEnv("APP_MODE")
+	appName := loadEnv("APP_NAME")
 	
 	server := &http.Server{
-		Addr		: ":"+port,
+		Addr		: ":" + port,
 		Handler		: router,
 		ReadTimeout	: time.Duration(readTimeout) * time.Second,
 		WriteTimeout: time.Duration(writeTimeout) * time.Second,		
 	}
+
+	router.GET("/", func(c *gin.Context) {
+		c.JSON(200, gin.H{
+			"message": appName + " API",
+		})
+	})
 
 	gin.SetMode(appMode)
 
