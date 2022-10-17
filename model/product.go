@@ -16,7 +16,7 @@ const (
 
 type Product struct {
 	ID			string			`gorm:"primaryKey"`
-	Code		string			`gorm:"size:50;index:idx_product_code,unique"`
+	Code		string			`gorm:"size:50;index:idx_product_code,unique;not null"`
 	Name		string			`gorm:"size:125;not null"`
 	Description	string			`gorm:"type:text;not null"`
 	Price		uint32			`gorm:"not null"`
