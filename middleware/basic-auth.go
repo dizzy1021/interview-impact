@@ -1,6 +1,6 @@
 package middleware
 
-import (
+import (	
 	"net/http"
 
 	"dizzy1021.dev/interview-impact/util"
@@ -10,9 +10,11 @@ import (
 func BasicAuth() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		username, password, ok := ctx.Request.BasicAuth()
-		if !ok {        
+		if !ok {
 			message := "autentikasi tidak ditemukan"
-			ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": message})
+			resp := util.NewAPIResponse(nil, &message, http.StatusUnauthorized)			
+			ctx.JSON(http.StatusUnauthorized, resp)
+			ctx.Abort()
 			return
 		}
 
@@ -20,9 +22,11 @@ func BasicAuth() gin.HandlerFunc {
 		validPassword := util.LoadEnv("BASIC_AUTH_PASSWORD")
 
 		isValid := (username == validUsername) && (password == validPassword)
-		if !isValid {        
-			message := "autentikasi tidak valid"
-			ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": message})
+		if !isValid {
+			message := "autentikasi tidak valid"			
+			resp := util.NewAPIResponse(nil, &message, http.StatusUnauthorized)
+			ctx.JSON(http.StatusUnauthorized, resp)
+			ctx.Abort()
 			return
 		}
 
