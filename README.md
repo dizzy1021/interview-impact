@@ -20,11 +20,11 @@
 `` TODO ``
 
 - [x] Environtment Variable
-- [ ] Use Basic Auth to secure API
+- [x] Use Basic Auth to secure API
 - [ ] Rate Limiter
 - [x] Postgresql Driver
 - [ ] Request Validation
 - [ ] Response JSON API
-- [ ] API Versioning
+- [x] API Versioning
 - [ ] Unit Test
 - [ ] API Docs

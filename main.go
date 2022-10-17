@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"dizzy1021.dev/interview-impact/driver"
+	"dizzy1021.dev/interview-impact/middleware"
 	"dizzy1021.dev/interview-impact/model"
 	"dizzy1021.dev/interview-impact/service/product"
 	"dizzy1021.dev/interview-impact/util"
@@ -55,7 +56,7 @@ func main() {
 	})
 
 	// Register Services
-	v1 := router.Group("/api/v1")
+	v1 := router.Group("/api/v1", middleware.BasicAuth())
 	product.NewProductService(router, db).New(v1)
 
 	server.ListenAndServe()
