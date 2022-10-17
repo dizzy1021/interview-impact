@@ -109,7 +109,19 @@ func (service *ProductService) UpdateProduct() gin.HandlerFunc {
 func (service *ProductService) FindProduct() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		id := ctx.Param("id")
-		ctx.JSON(http.StatusOK, "Product Found: " + id)
+				
+		product, err := service.store.FindOneProduct(id)
+		if err != nil {
+			message := "produk tidak ditemukan"
+			resp := util.NewAPIResponse(nil, message, http.StatusBadRequest)
+			ctx.JSON(http.StatusBadRequest, resp)
+			ctx.Abort()
+			return
+		}
+
+		message := "produk ditemukan"
+		resp := util.NewAPIResponse(product, message, http.StatusOK)
+		ctx.JSON(http.StatusOK, resp)
 	}	
 }
 
