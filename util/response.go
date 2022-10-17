@@ -6,10 +6,10 @@ type APIResponse struct {
 	Code	int				`json:"code"`
 }
 
-func NewAPIResponse(data *interface{}, message *string, code int) APIResponse {
+func NewAPIResponse(data interface{}, message string, code int) APIResponse {
 	response := APIResponse{
-		Data	: data,
-		Message	: message,
+		Data	: &data,
+		Message	: &message,
 		Code	: code,
 	}
 

@@ -12,7 +12,7 @@ func BasicAuth() gin.HandlerFunc {
 		username, password, ok := ctx.Request.BasicAuth()
 		if !ok {
 			message := "autentikasi tidak ditemukan"
-			resp := util.NewAPIResponse(nil, &message, http.StatusUnauthorized)			
+			resp := util.NewAPIResponse(nil, message, http.StatusUnauthorized)			
 			ctx.JSON(http.StatusUnauthorized, resp)
 			ctx.Abort()
 			return
@@ -24,7 +24,7 @@ func BasicAuth() gin.HandlerFunc {
 		isValid := (username == validUsername) && (password == validPassword)
 		if !isValid {
 			message := "autentikasi tidak valid"			
-			resp := util.NewAPIResponse(nil, &message, http.StatusUnauthorized)
+			resp := util.NewAPIResponse(nil, message, http.StatusUnauthorized)
 			ctx.JSON(http.StatusUnauthorized, resp)
 			ctx.Abort()
 			return
