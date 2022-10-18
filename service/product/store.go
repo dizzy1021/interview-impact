@@ -3,6 +3,7 @@ package product
 import (
 	"dizzy1021.dev/interview-impact/model"
 	"dizzy1021.dev/interview-impact/util"
+	"github.com/gin-gonic/gin"
 
 	"gorm.io/gorm"
 )
@@ -44,14 +45,15 @@ func (store *ProductStore) DeleteProduct(id string) error {
 	return nil	
 }
 
-func (store *ProductStore) FindProduct(page, pageSize int) ([]*model.Product, error) {
+func (store *ProductStore) FindProduct(ctx *gin.Context) ([]*model.Product, *util.Pagination, error) {
 	var products []*model.Product
-	result := store.db.Scopes(util.Paginate(page, pageSize)).Find(products)
+	pagination := util.NewPagination(ctx)
+	result := store.db.Scopes(util.Paginate(products, &pagination, store.db)).Find(&products)
 
 	if result.Error != nil {
-		return nil, result.Error
+		return nil, nil, result.Error
 	}
-	return products, nil	
+	return products, &pagination, nil	
 }
 
 func (store *ProductStore) FindOneProduct(id string) (*model.Product, error) {

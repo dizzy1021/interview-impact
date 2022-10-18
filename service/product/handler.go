@@ -1,8 +1,8 @@
 package product
 
-import (	
+import (
 	"net/http"
-
+	
 	"dizzy1021.dev/interview-impact/model"
 	"dizzy1021.dev/interview-impact/util"
 	"github.com/gin-gonic/gin"
@@ -127,6 +127,17 @@ func (service *ProductService) FindProduct() gin.HandlerFunc {
 
 func (service *ProductService) FindAllProduct() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		ctx.JSON(http.StatusOK, "Products Found")
+		product, pagination, err := service.store.FindProduct(ctx)
+		if err != nil {
+			message := "produk tidak ditemukan"
+			resp := util.NewAPIResponse(nil, message, http.StatusBadRequest)
+			ctx.JSON(http.StatusBadRequest, resp)
+			ctx.Abort()
+			return
+		}
+
+		message := "produk ditemukan"
+		resp := util.NewAPIPaginationResponse(product, message, http.StatusOK, ctx, *pagination)
+		ctx.JSON(http.StatusOK, resp)		
 	}	
 }
