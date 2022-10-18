@@ -4,9 +4,9 @@
 
 - REST API Product
   - [x] POST Product
-  - [ ] PUT Product
-  - [ ] DELETE Product
-  - [ ] GET Product with filter and pagination
+  - [x] PUT Product
+  - [x] DELETE Product
+  - [x] GET Product with filter and pagination
 
 `` Structure ``
 
