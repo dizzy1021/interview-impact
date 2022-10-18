@@ -48,7 +48,7 @@ func (store *ProductStore) DeleteProduct(id string) error {
 func (store *ProductStore) FindProduct(ctx *gin.Context) ([]*model.Product, *util.Pagination, error) {
 	var products []*model.Product
 	pagination := util.NewPagination(ctx)
-	result := store.db.Scopes(util.Paginate(products, &pagination, store.db)).Find(&products)
+	result := store.db.Scopes(store.FilterProduct(ctx), util.Paginate(products, &pagination, store.db)).Find(&products)
 
 	if result.Error != nil {
 		return nil, nil, result.Error
@@ -71,4 +71,23 @@ func (store *ProductStore) FindOneProductByCode(code string) (*model.Product) {
 	_ = store.db.Where("code = ?", code).First(&product)	
 	
 	return product	
+}
+
+func (store *ProductStore) FilterProduct(ctx *gin.Context) func(db *gorm.DB) *gorm.DB {
+
+	code := ctx.DefaultQuery("product_code", "")
+	name := ctx.DefaultQuery("product_name", "")	
+
+    return func(db *gorm.DB) *gorm.DB {
+
+		if code != "" {
+			db.Where("code iLIKE ?", "%" + code + "%")
+		}	
+		
+		if name != "" {
+			db.Where("name iLIKE ?", "%" + name + "%")
+		}
+
+        return db 
+    }   
 }
